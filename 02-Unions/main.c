@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <sec_api/string_s.h>
 
-union info {
+typedef union Info {
     char firstName[20];
     int age;
-};
+} info;
 
 int main(void) {
-    union info myInfo;
+    info myInfo;
 
     // As expected
     myInfo.age = 20;
