@@ -24,6 +24,10 @@ int main(void) {
         fputc(charToWrite, fp);
         charToWrite = *(++textToWrite);
     }
+
+    int bytesWritten = fprintf(fp, "\nHello, File! %d times!", 2);
+    printf("Bytes written: %d\n", bytesWritten);
+
     fclose(fp);
     return 0;
 }
