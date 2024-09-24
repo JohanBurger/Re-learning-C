@@ -1,33 +1,71 @@
 #include <stdio.h>
 
+#include "file_operations.h"
+
 int main(void) {
     // Reading the contents of a file:
+    // modes are:
+    //   r: read
+    //   w: write (wil overwrite existing file)
+    //   a: append
     FILE* fp = fopen("../file_to_read.txt", "r");
     if (fp == NULL) {
         printf("Could not open the file\n");
         return 1;
     }
 
-    // Read the file one char at a time...
-    char c = fgetc(fp);
+    char c = readFileCharacter(fp);
     while (c != EOF) {
         printf("%c", c);
-        c = fgetc(fp);
+        c = readFileCharacter(fp);
     }
     fclose(fp);
+    printf("\n");
 
-    // Writing to a file:
+    // Read the file with fscanf
+    // fscanf(<file pointer>, <format string>, address of target) reads formatted input, like scanf()
+    // fprintf(<file pointer>, <format string>, <values>) writes formatted output, like printf()
+
+    fp = fopen("../file_to_read.txt", "r");
+    if (fp == NULL) {
+        printf("Could not open the file\n");
+        return 1;
+    }
+
+    char* format = "%s";
+    char* text = readFileWithFormat(fp, format, 100);
+    printf("Read with fscanf: %s\n", text);
+    fclose(fp);
+
+    // Writing to a file one char at a time:
     fp = fopen("../file_to_write.txt", "w");
     char* textToWrite = "Hello, File!";
     char charToWrite = *textToWrite;
     while (charToWrite != '\0') {
-        fputc(charToWrite, fp);
+        writeByteToFile(fp, charToWrite);
         charToWrite = *(++textToWrite);
     }
 
-    int bytesWritten = fprintf(fp, "\nHello, File! %d times!", 2);
+    format = "\nHello, File! %d times!";
+    int bytesWritten = writeFormatToFile(fp, format, 2);
     printf("Bytes written: %d\n", bytesWritten);
 
+    int success = writeStringToFile(fp, "\nHello, File! Again!");
+    if (success) {
+        printf("Bytes written: %d\n", bytesWritten);
+    }
+
     fclose(fp);
+
+    fp = fopen("../file_to_read.txt", "r");
+    if (fp == NULL) {
+        printf("Could not open the file\n");
+        return 1;
+    }
+
+    char* contents = readStringFromFile(fp);
+    printf("%s\n", contents);
     return 0;
+
+
 }
