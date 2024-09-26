@@ -16,17 +16,14 @@ char* readFileWithFormat(FILE* filePointer, char* format, int size) {
     return returnString;
 }
 
-char* readStringFromFile(FILE* filePointer) {
-    fseek(filePointer, 0, SEEK_END);
-    long size = ftell(filePointer);
-    rewind(filePointer);
-
+char* readStringFromFile(FILE* filePointer, size_t size) {
     // This creates a memory leak if this memory is never freed.
     char* value= (char*)malloc(sizeof(char) * size);
-    printf("The file is %d bytes long\n", size);
     char buffer[size];
-    char* contents = fgets(buffer, size, filePointer);
-    strcpy(value, contents);
+    if (fgets(buffer, size, filePointer) == NULL) {
+        return NULL;
+    }
+    strcpy(value, buffer);
     return value;
 }
 
@@ -40,4 +37,22 @@ int writeFormatToFile(FILE* filePointer, char* format, ...) {
 
 int writeStringToFile(FILE* filePointer, char* string) {
     return fputs(string, filePointer);
+}
+
+int countCharactersInFile(FILE* filePointer) {
+    if (filePointer == NULL) {
+        return -1;
+    }
+
+    int charCounter = 0;
+    char c;
+    while (!feof(filePointer)) {
+        c = fgetc(filePointer);
+        if (c != '\n') {
+            printf("%c", c);
+            charCounter++;
+        }
+    }
+
+    return charCounter;
 }

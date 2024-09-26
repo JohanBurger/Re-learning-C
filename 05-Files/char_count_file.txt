@@ -1,0 +1,3 @@
+Hello,
+this is Johan
+counting characters in a file.

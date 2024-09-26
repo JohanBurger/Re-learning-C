@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "file_operations.h"
 
@@ -15,7 +16,8 @@ int main(void) {
     }
 
     char c = readFileCharacter(fp);
-    while (c != EOF) {
+    while (!feof(fp)) {
+    // while (c != EOF) {
         printf("%c", c);
         c = readFileCharacter(fp);
     }
@@ -63,9 +65,23 @@ int main(void) {
         return 1;
     }
 
-    char* contents = readStringFromFile(fp);
-    printf("%s\n", contents);
+    size_t size = 10;
+    char* contents = readStringFromFile(fp, size);
+    while (contents != NULL) {
+        printf("%s\n", contents);
+        free(contents);
+        contents = readStringFromFile(fp, size);
+    }
+    fclose(fp);
+
+    fp = fopen("../char_count_file.txt", "r");
+    if (fp == NULL) {
+        printf("Could not open the file\n");
+        return 1;
+    }
+    int charCount = countCharactersInFile(fp);
+    printf("File has %d characters\n", charCount);
+    fclose(fp);
+
     return 0;
-
-
 }
