@@ -11,5 +11,6 @@ int writeFormatToFile(FILE* filePointer, char* format, ...);
 int writeStringToFile(FILE* filePointer, char* string);
 
 int countCharactersInFile(FILE* filePointer);
+int countLinesInFile(FILE* filePointer);
 
 #endif //FILE_OPERATIONS_H

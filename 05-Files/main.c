@@ -83,5 +83,25 @@ int main(void) {
     printf("File has %d characters\n", charCount);
     fclose(fp);
 
+    fp = fopen("../char_count_file.txt", "r");
+    if (fp == NULL) {
+        printf("Could not open the file\n");
+        return 1;
+    }
+
+    int lineCount = countLinesInFile(fp);
+    printf("File has %d lines\n", lineCount);
+
+    fclose(fp);
+
+    fp = fopen("numbers_squares.txt", "w");
+    if (fp == NULL) {
+        return 1;
+    }
+    for (int counter = 1; counter <= 10; counter++) {
+        fprintf(fp, "%2d : %3d\n", counter, counter * counter);
+    }
+    fclose(fp);
+
     return 0;
 }
