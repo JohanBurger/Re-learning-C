@@ -19,6 +19,7 @@ char* readFileWithFormat(FILE* filePointer, char* format, int size) {
 char* readStringFromFile(FILE* filePointer, size_t size) {
     // This creates a memory leak if this memory is never freed.
     char* value= (char*)malloc(sizeof(char) * size);
+    printf("The file is %d bytes long\n", size);
     char buffer[size];
     if (fgets(buffer, size, filePointer) == NULL) {
         return NULL;
@@ -45,14 +46,31 @@ int countCharactersInFile(FILE* filePointer) {
     }
 
     int charCounter = 0;
-    char c;
+    char c = fgetc(filePointer);;
     while (!feof(filePointer)) {
+        printf("%c", c);
+        charCounter++;
         c = fgetc(filePointer);
-        if (c != '\n') {
-            printf("%c", c);
-            charCounter++;
-        }
+
     }
 
     return charCounter;
+}
+
+int countLinesInFile(FILE* filePointer) {
+    if (filePointer == NULL) {
+        return -1;
+    }
+    // File must at least have one line, even if it is blank.
+    int lineCounter = 1;
+
+    char c = fgetc(filePointer);
+    while (!feof(filePointer)) {
+        if (c == '\n') {
+            lineCounter++;
+        }
+        c = fgetc(filePointer);
+    }
+
+    return lineCounter;
 }
