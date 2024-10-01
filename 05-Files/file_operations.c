@@ -18,7 +18,8 @@ char* readFileWithFormat(FILE* filePointer, char* format, int size) {
 
 char* readStringFromFile(FILE* filePointer, size_t size) {
     // This creates a memory leak if this memory is never freed.
-    char* value = malloc(sizeof(char) * size);
+    char* value= (char*)malloc(sizeof(char) * size);
+    printf("The file is %d bytes long\n", size);
     char buffer[size];
     if (fgets(buffer, size, filePointer) == NULL) {
         return NULL;
