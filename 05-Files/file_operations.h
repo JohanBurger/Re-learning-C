@@ -12,5 +12,6 @@ int writeStringToFile(FILE* filePointer, char* string);
 
 int countCharactersInFile(FILE* filePointer);
 int countLinesInFile(FILE* filePointer);
+int* getCharacterFrequencies(FILE* filePointer);
 
 #endif //FILE_OPERATIONS_H

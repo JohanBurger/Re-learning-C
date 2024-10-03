@@ -103,5 +103,19 @@ int main(void) {
     }
     fclose(fp);
 
+    fp = fopen("../char_count_file.txt", "r");
+    int* frequencies = getCharacterFrequencies(fp);
+    if (frequencies == NULL) {
+        printf("Could not get character frequency\n");
+        return 1;
+    }
+    fclose(fp);
+
+    for (int counter = 0; counter < 26; counter++) {
+        printf("%c: %d\n", 'a' + counter, frequencies[counter]);
+    }
+
+    free(frequencies);
+
     return 0;
 }
