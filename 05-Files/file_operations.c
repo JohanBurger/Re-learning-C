@@ -74,3 +74,21 @@ int countLinesInFile(FILE* filePointer) {
 
     return lineCounter;
 }
+
+int* getCharacterFrequencies(FILE* filePointer) {
+    if (filePointer == NULL) {
+        return NULL;
+    }
+
+    int* frequencies = calloc(26, sizeof(int));
+    char c = fgetc(filePointer);
+    while (!feof(filePointer)) {
+        if (c >= 'a' && c <= 'z') {
+            frequencies[c - 'a']++;
+        } else if (c >= 'A' && c <= 'Z') {
+            frequencies[c - 'A']++;
+        }
+        c = fgetc(filePointer);
+    }
+    return frequencies;
+}
