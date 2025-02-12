@@ -14,3 +14,11 @@ void swap(void* a, void* b, const size_t size) {
     memcpy(b, temp, size);
     free(temp);
 }
+
+int sum(const int* arr, const size_t size) {
+    int sum = 0;
+    for (size_t i = 0; i < size; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}

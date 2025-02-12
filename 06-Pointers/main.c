@@ -55,5 +55,8 @@ int main(int argc, char** argv) {
         size_t len = strlen(argv[counter]);
         printf("Argument %d at %p %s, %zu chars\n", counter, &arg[counter], argv[counter], len);
     }
+
+    int array_sum = sum(grades, 3);
+    printf("Sum of grades: %d\n", array_sum);
     return 0;
 }
