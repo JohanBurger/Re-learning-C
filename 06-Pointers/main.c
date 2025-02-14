@@ -58,5 +58,11 @@ int main(int argc, char** argv) {
 
     int array_sum = sum(grades, 3);
     printf("Sum of grades: %d\n", array_sum);
+
+    bool has_85 = has_element(grades, 3, 85);
+    printf("Has 85: %s\n", has_85 ? "true" : "false");
+
+    printf("Max grade: %d\n", get_max(grades, 3));
+    printf("Average grade: %.2f\n", get_average(grades, 3));
     return 0;
 }
