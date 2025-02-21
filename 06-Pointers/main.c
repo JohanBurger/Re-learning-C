@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "pointer_operations.h"
@@ -11,7 +12,7 @@ int main(int argc, char** argv) {
     printf("After swap:  a = %d at %p, b = %d at %p\n", a, &a, b, &b);
 
     // Pointer arithmetic: incrementing a pointer by 1 moves it to the next memory location of the same data type
-    int grades[] = {80, 75, 85};
+    int grades[] = {81, 75, 85};
     int* gradesPtr = &grades[0];
     int* zeroth_address = gradesPtr;
     int* next_address = ++gradesPtr;
@@ -64,5 +65,21 @@ int main(int argc, char** argv) {
 
     printf("Max grade: %d\n", get_max(grades, 3));
     printf("Average grade: %.2f\n", get_average(grades, 3));
+
+    const size_t element_count = 4;
+    // int some_array[element_count];
+    int* some_array = malloc(element_count * sizeof(int));
+    input_array(some_array, element_count);
+    print_array(some_array, element_count);
+
+    int min, max;
+    get_min_max(some_array, element_count, &min, &max);
+    printf("min: %d, max: %d\n", min, max);
+
+    float average;
+    update_average(some_array[0], some_array[1], &average);
+    printf("Average: %.2f\n", average);
+
+    free(some_array);
     return 0;
 }
