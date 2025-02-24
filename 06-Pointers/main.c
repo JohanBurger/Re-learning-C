@@ -79,7 +79,20 @@ int main(int argc, char** argv) {
     float average;
     update_average(some_array[0], some_array[1], &average);
     printf("Average: %.2f\n", average);
-
     free(some_array);
+
+    int neighbors[] = {1, 4, 1, 4, 2};
+    bool good_neighbor = has_good_neighbor(neighbors, 5);
+    if (good_neighbor) {
+        printf("Good neighbor found\n");
+    } else {
+        printf("No good neighbor found\n");
+    }
+
+    int sorted[] = {1, 2, 3, 4, 5, 5};
+    bool is_really_sorted;
+    bool sorted_result = check_is_sorted(sorted, 6, &is_really_sorted);
+    printf("Sorted: %s, really sorted: %s\n",
+        sorted_result ? "true" : "false", is_really_sorted ? "true" : "false");
     return 0;
 }
