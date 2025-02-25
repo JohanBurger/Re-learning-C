@@ -94,3 +94,29 @@ void get_min_max(const int* arr, const size_t size, int* min, int* max) {
 void update_average(const int a, const int b, float* average) {
     *average = (float)(a + b) / 2;
 }
+
+bool has_good_neighbor(const int* arr, const size_t size) {
+    for (size_t counter = 1; counter < size -1; counter++) {
+        int element = arr[counter];
+        int before = arr[counter - 1];
+        int after = arr[counter + 1];
+        if (element == before + after) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool check_is_sorted(const int* arr, const size_t size, bool* is_really_sorted) {
+    *is_really_sorted = true;
+    for (size_t counter = 1; counter < size; counter++) {
+        if (arr[counter] < arr[counter - 1]) {
+            *is_really_sorted = false;
+            return false;
+        }
+        if (arr[counter] == arr[counter - 1]) {
+            *is_really_sorted = false;
+        }
+    }
+    return true;
+}
