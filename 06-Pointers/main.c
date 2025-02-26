@@ -94,5 +94,15 @@ int main(int argc, char** argv) {
     bool sorted_result = check_is_sorted(sorted, 6, &is_really_sorted);
     printf("Sorted: %s, really sorted: %s\n",
         sorted_result ? "true" : "false", is_really_sorted ? "true" : "false");
+
+    sorted_result = check_is_sorted_recursive(sorted, 6, &is_really_sorted);
+    printf("Sorted: %s, really sorted: %s\n",
+        sorted_result ? "true" : "false", is_really_sorted ? "true" : "false");
+
+    char array[] = {'a', 'f', 'k', 'd'};
+    reverse_iterative(array, 4);
+    for (size_t counter = 0; counter < 4; counter++) {
+        printf("%c ", array[counter]);
+    }
     return 0;
 }

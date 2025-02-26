@@ -15,5 +15,7 @@ void get_min_max(const int* arr, const size_t size, int* min, int* max);
 void update_average(const int a, const int b, float* average);
 bool has_good_neighbor(const int* arr, const size_t size);
 bool check_is_sorted(const int* arr, const size_t size, bool* is_really_sorted);
+bool check_is_sorted_recursive(const int* arr, const size_t size, bool* is_really_sorted);
+void reverse_iterative(char* array, const size_t size);
 
 #endif //POINTEROPERATIONS_H

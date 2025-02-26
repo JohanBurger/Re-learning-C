@@ -9,7 +9,9 @@
 //     *b = temp;
 // }
 
-void swap(void* a, void* b, const size_t size) {
+void swap(void* a, void* b, size_t size) {
+    // size_t size = sizeof(a);
+    // printf("%zu\n", size);
     void* temp = malloc(size);
     memcpy(temp, a, size);
     memcpy(a, b, size);
@@ -119,4 +121,31 @@ bool check_is_sorted(const int* arr, const size_t size, bool* is_really_sorted) 
         }
     }
     return true;
+}
+
+bool check_is_sorted_recursive(const int* arr, const size_t size, bool* is_really_sorted) {
+    bool result;
+
+    if (size == 1) {
+        *is_really_sorted = true;
+        return true;
+    }
+    result = check_is_sorted_recursive(arr, size - 1, is_really_sorted);
+    if (!result || arr[size - 1] < arr[size - 2]) {
+        *is_really_sorted = false;
+        return false;
+    }
+    if (arr[size -1 ] == arr[size - 2]) {
+        *is_really_sorted = false;
+    }
+    return result;
+}
+
+void reverse_iterative(char *array, const size_t size) {
+    for (size_t counter = 0; counter < size / 2; counter++) {
+        // printf("%c ", array[counter]);
+        printf("%zu: %c %c \n", counter, array[counter], array[size - counter - 1]);
+        swap(&array[counter], &array[size - counter - 1], sizeof(char));
+        printf("%zu: %c %c \n", counter, array[counter], array[size - counter - 1]);
+    }
 }
