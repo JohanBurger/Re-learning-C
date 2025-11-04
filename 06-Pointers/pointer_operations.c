@@ -148,4 +148,4 @@ void reverse_iterative(char *array, const size_t size) {
         swap(&array[counter], &array[size - counter - 1], sizeof(char));
         printf("%zu: %c %c \n", counter, array[counter], array[size - counter - 1]);
     }
-}
+h}
