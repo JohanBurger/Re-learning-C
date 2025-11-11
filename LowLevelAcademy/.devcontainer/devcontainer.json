@@ -1,0 +1,42 @@
+{
+	"name": "C/C++ Development",
+	"image": "mcr.microsoft.com/devcontainers/cpp:1-debian-12",
+	
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": true,
+			"configureZshAsDefaultShell": true,
+			"installOhMyZsh": true,
+			"upgradePackages": true
+		}
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cpptools-extension-pack",
+				"ms-vscode.cmake-tools"
+			],
+			"settings": {
+				"C_Cpp.default.compilerPath": "/usr/bin/gcc",
+				"C_Cpp.default.cStandard": "c17",
+				"C_Cpp.default.cppStandard": "c++17",
+				"C_Cpp.default.intelliSenseMode": "linux-gcc-x64"
+			}
+		}
+	},
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "gcc --version && make --version",
+
+	// Configure tool-specific properties.
+	"mounts": [
+		"source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+	],
+
+	"workspaceFolder": "/workspace",
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "vscode"
+}
