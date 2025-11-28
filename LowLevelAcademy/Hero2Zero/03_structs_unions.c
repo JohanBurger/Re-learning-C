@@ -34,7 +34,7 @@ typedef union data_u {
     short s;
 } data_u;
 
-int main(int argc, char *argv[]) {
+int main(void) {
     size_t size = sizeof(employee_t);
     printf("The size of employee_t is %zu bytes.\n", size);
 
@@ -44,12 +44,6 @@ int main(int argc, char *argv[]) {
         .income = 100.00f,
         .is_manager = true
     };
-
-    // struct employee_t fred;
-    // snprintf(fred.first_name, sizeof fred.first_name, "%s", "Fred");
-    // snprintf(fred.last_name, sizeof fred.last_name, "%s", "Flintstone");
-    // fred.income = 100.00f;
-    // fred.is_manager = true;
 
     char *managerial = fred.is_manager ? "is" : "is not";
 
