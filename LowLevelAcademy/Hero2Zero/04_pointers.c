@@ -56,7 +56,7 @@ int initialize_employee(employee_t *employee) {
 
 status_t foo(int **data, size_t size) {
     int *temp = NULL;
-    // De-reference **data, so *data is simply a pointer to an int. 
+    // Dereference **data, so *data is simply a pointer to an int. 
     temp = realloc(*data, size);
 
     if (temp == NULL) {
