@@ -60,7 +60,6 @@ status_t foo(int **data, size_t size) {
     temp = realloc(*data, size);
 
     if (temp == NULL) {
-        *data = NULL;
         return STATUS_BAD;
     }
 
@@ -69,7 +68,7 @@ status_t foo(int **data, size_t size) {
     return STATUS_GOOD;
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
     int x = 3;                                      // <- This is on the stack. 
     int *ptr = &x;
     printf("Address of x (value %d): %p\n", *ptr, ptr); 
@@ -84,6 +83,7 @@ int main(int argc, char *argv[]) {
         perror("malloc");
         return EXIT_FAILURE;
     }
+    initialize_employee(tim);
     printf("Address of dynamically allocated employee_t: %p\n", tim);
 
     show_memory_map();
@@ -92,10 +92,16 @@ int main(int argc, char *argv[]) {
     tim = NULL;
 
     int *first = malloc(64);
+    if (first == NULL) {
+        perror("malloc");
+        return EXIT_FAILURE;
+    }
     // &first is of type int **, since first is an int *
     // first is a pointer, &first is the address of pointer. 
     if (STATUS_BAD == foo(&first, 128)) {
         fprintf(stderr, "Memory allocation failed in foo()\n");
+        free(first);
+        first = NULL;
         return EXIT_FAILURE;
     }
     printf("Successfully reallocated memory to 128 bytes at address: %p\n", first);
