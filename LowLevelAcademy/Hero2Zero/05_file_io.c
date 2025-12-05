@@ -81,7 +81,7 @@ int read_header(char *path, database_header_t *header) {
     }
     off_t file_size = file_stat.st_size;
     if (file_size < sizeof(database_header_t)) {
-        fprintf(stderr, "File size too small: %lu bytes\n", file_size);
+        fprintf(stderr, "File size too small: %lld bytes\n", (long long)file_size);
         close(fd);
         return EXIT_FAILURE;
     }
@@ -93,8 +93,8 @@ int read_header(char *path, database_header_t *header) {
     }
     close(fd);
     if (header->filesize != file_size) {
-        fprintf(stderr, "File size mismatch: header %u vs actual %lu\n", 
-            header->filesize, file_size);
+        fprintf(stderr, "File size mismatch: header %u vs actual %lld\n", 
+            header->filesize, (long long)file_size);
         return EXIT_FAILURE;
     } else {
         printf("File size verified!\n");
@@ -106,9 +106,24 @@ int read_header(char *path, database_header_t *header) {
         perror("fopen");
         return EXIT_FAILURE;
     }
-    fseek(file, 0, SEEK_END);
+
+    if (fseek(file, 0, SEEK_END) != EXIT_SUCCESS) {
+        perror("fseek");
+        fclose(file);
+        return EXIT_FAILURE;
+    }
     long file_size = ftell(file);
-    fseek(file, 0, SEEK_SET);
+    if (file_size == -1) {
+        perror("ftell");
+        fclose(file);
+        return EXIT_FAILURE;
+    }
+    if (fseek(file, 0, SEEK_SET) != EXIT_SUCCESS) {
+        perror("fseek");
+        fclose(file);
+        return EXIT_FAILURE;
+    }
+    
     if (file_size < sizeof(database_header_t)) {
         fprintf(stderr, "File size too small: %ld bytes\n", file_size);
         fclose(file);
