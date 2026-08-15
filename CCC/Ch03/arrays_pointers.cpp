@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <cstdio>
 
 struct College
@@ -7,14 +8,14 @@ struct College
 
 void print_name(const College *college_ptr)
 {
-    printf("%s College\n", college_ptr->name);
+    std::printf("%s College\n", college_ptr->name);
 }
 
-void print_names(const College *college_ptr, size_t count)
+void print_names(const College *college_ptr, std::size_t count)
 {
-    for (size_t i = 0; i < count; ++i)
+    for (std::size_t i = 0; i < count; ++i)
     {
-        printf("%s College\n", college_ptr[i].name);
+        std::printf("%s College\n", college_ptr[i].name);
     }
 }
 
@@ -41,7 +42,7 @@ int main(void)
     char letter_d = lower[3];
     char letter_D = upper_ptr[3];
 
-    printf("%c %c\n", letter_d, letter_D);
+    std::printf("%c %c\n", letter_d, letter_D);
 
     // (The array only has 6 elements, including the null terminator).
     // lower[7] = 'g'; // <- This would be a buffer overflow.

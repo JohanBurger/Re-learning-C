@@ -31,12 +31,12 @@ int main(void)
 
     trooper3.prefix[0] = 'L';
     trooper3.prefix[1] = 'S';
-    trooper3.operating_number = 005;
+    trooper3.operating_number = 5;
 
     for (Element *cursor = &trooper1; cursor != nullptr; cursor = cursor->next)
     {
-        printf("%c%c-%03d\n",
-               cursor->prefix[0], cursor->prefix[1],
-               cursor->operating_number);
+        std::printf("%c%c-%03d\n",
+                    cursor->prefix[0], cursor->prefix[1],
+                    cursor->operating_number);
     }
 }
