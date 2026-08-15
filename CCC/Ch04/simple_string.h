@@ -5,7 +5,7 @@
 
 struct SimpleString
 {
-    SimpleString(size_t max_size);               // Constructor
+    SimpleString(std::size_t max_size);          // Constructor
     SimpleString(const SimpleString &other);     // Copy constructor
     SimpleString(SimpleString &&other) noexcept; // Move constructor
 
@@ -17,9 +17,9 @@ struct SimpleString
     ~SimpleString(); // Destructor
 
 private:
-    size_t max_size;
+    std::size_t max_size;
     char *buffer;
-    size_t length;
+    std::size_t length;
 };
 
 #endif // SIMPLE_STRING_H

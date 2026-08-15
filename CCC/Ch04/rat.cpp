@@ -14,9 +14,9 @@
 //     const auto waste_heat = rat_things_power * 20;
 //     if (waste_heat > 10'000)
 //     {
-//         printf("Warning! Hot doggie!\n");
+//         std::printf("Warning! Hot doggie!\n");
 //     }
-//     printf("Rat things power: %d\n", rat_things_power);
+//     std::printf("Rat things power: %d\n", rat_things_power);
 // }
 
 struct RatThing
@@ -28,9 +28,9 @@ struct RatThing
         const auto waste_heat = rat_things_power * 20;
         if (waste_heat > 10'000)
         {
-            printf("Warning! Hot doggie!\n");
+            std::printf("Warning! Hot doggie!\n");
         }
-        printf("Rat things power: %d\n", rat_things_power);
+        std::printf("Rat things power: %d\n", rat_things_power);
     }
 };
 
@@ -38,11 +38,11 @@ thread_local int RatThing::rat_things_power = 200;
 
 int main(void)
 {
-    // printf("Rat things power: %d\n", rat_things_power);
+    // std::printf("Rat things power: %d\n", rat_things_power);
     RatThing::power_up_rat_thing(100);
-    // printf("Rat things power after power-up: %d\n", rat_things_power);
+    // std::printf("Rat things power after power-up: %d\n", rat_things_power);
     RatThing::power_up_rat_thing(500);
-    // printf("Rat things power after second power-up: %d\n", rat_things_power);
+    // std::printf("Rat things power after second power-up: %d\n", rat_things_power);
 
     int *my_int_ptr = new int(42);
     delete my_int_ptr;

@@ -3,12 +3,12 @@
 
 void ref_type(int &x)
 {
-    printf("lvalue reference %d\n", x);
+    std::printf("lvalue reference %d\n", x);
 }
 
 void ref_type(int &&x)
 {
-    printf("rvalue reference %d\n", x);
+    std::printf("rvalue reference %d\n", x);
 }
 
 int main(void)

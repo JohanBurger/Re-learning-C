@@ -22,7 +22,7 @@ int main()
 
     if (!s.append_line("Galatica!"))
     {
-        printf("String was not big enough to append another message.");
+        std::printf("String was not big enough to append another message.");
     }
 
     SimpleString a{50};

@@ -4,12 +4,12 @@ struct Tracer
 {
     Tracer(const char *name) : name(name)
     {
-        printf("Tracer %s constructed\n", name);
+        std::printf("Tracer %s constructed\n", name);
     }
 
     ~Tracer()
     {
-        printf("Tracer %s destructed\n", name);
+        std::printf("Tracer %s destructed\n", name);
     }
 
 private:
@@ -22,11 +22,11 @@ thread_local Tracer t2{"Thread-local variable t2"};
 int main(void)
 {
     const auto t2_ptr = &t2;
-    printf("A\n");
+    std::printf("A\n");
     Tracer t3{"Automatic variable t3"};
-    printf("B\n");
+    std::printf("B\n");
     const auto *t4 = new Tracer{"Dynamic variable t4"};
-    printf("C\n");
+    std::printf("C\n");
 }
 
 /* Output:

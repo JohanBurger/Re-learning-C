@@ -24,7 +24,6 @@ int main(void)
     }
     catch (const std::runtime_error &e)
     {
-        
-        printf("Caught exception: %s\n", e.what());
+        std::printf("Caught exception: %s\n", e.what());
     }
 }

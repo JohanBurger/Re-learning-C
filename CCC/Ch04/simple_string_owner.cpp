@@ -40,7 +40,7 @@ void fn_b()
 int main()
 {
     // SimpleStringOwner sso{"x"};
-    // printf("x is alive!\n");
+    // std::printf("x is alive!\n");
 
     try
     {

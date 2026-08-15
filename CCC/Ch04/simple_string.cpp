@@ -1,10 +1,11 @@
+#include <cstddef>
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
 
 #include "simple_string.h"
 
-SimpleString::SimpleString(size_t max_size)
+SimpleString::SimpleString(std::size_t max_size)
     : max_size{max_size}, length{}
 {
     if (max_size == 0)
@@ -60,7 +61,7 @@ SimpleString &SimpleString::operator=(SimpleString &&other) noexcept
     buffer = other.buffer;
     length = other.length;
     max_size = other.max_size;
-    
+
     other.buffer = nullptr;
     other.length = 0;
     other.max_size = 0;
