@@ -9,6 +9,10 @@ struct Bank
         : account_database(account_database),
           logger(logger)
     {
+        if (!this->account_database)
+        {
+            throw std::invalid_argument("AccountDatabase pointer cannot be null");
+        }
     }
 
     void set_logger(Logger *logger)

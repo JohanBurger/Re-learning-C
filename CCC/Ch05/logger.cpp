@@ -12,7 +12,7 @@ struct ConsoleLogger : Logger
         : prepend{prepend} {};
     void log_transfer(long from, long to, double amount) override
     {
-        printf("%s: %ld -> %ld: %f\n", this->prepend, from, to, amount);
+        std::printf("%s: %ld -> %ld: %f\n", this->prepend, from, to, amount);
     }
 
 private:

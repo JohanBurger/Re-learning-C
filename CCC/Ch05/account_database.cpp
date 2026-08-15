@@ -20,6 +20,6 @@ struct InMemoryAccountDatabase : AccountDatabase
     void update_balance(long account_id, double new_balance) override
     {
         // For demonstration purposes, just print the update action
-        printf("Updating account %ld to new balance: %f\n", account_id, new_balance);
+        std::printf("Updating account %ld to new balance: %f\n", account_id, new_balance);
     }
 };
