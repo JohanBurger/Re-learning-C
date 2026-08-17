@@ -22,6 +22,11 @@ struct Bank
 
     void transfer(long from, long to, double amount)
     {
+        if (amount <= 0.0)
+        {
+            throw std::invalid_argument("Transfer amount must be positive");
+        }
+
         double from_balance = account_database->get_balance(from);
         if (from_balance < amount)
         {

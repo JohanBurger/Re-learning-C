@@ -1,7 +1,6 @@
-//
+// clang++ -std=c++17 -Wall -Wextra -pedantic logging_bank.cpp bank.cpp account_database.cpp logger.cpp -o logging_bank
+
 #include "bank.cpp"
-// #include "account_database.cpp"
-// #include "logger.cpp"
 
 int main(void)
 {

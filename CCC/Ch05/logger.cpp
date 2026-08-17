@@ -1,10 +1,13 @@
 #include <cstdio>
 
+#ifndef LOGGER_CPP
+#define LOGGER_CPP
 struct Logger
 {
     virtual ~Logger() = default;
     virtual void log_transfer(long from, long to, double amount) = 0;
 };
+#endif // LOGGER_CPP
 
 struct ConsoleLogger : Logger
 {
@@ -23,6 +26,6 @@ struct FileLogger : Logger
 {
     void log_transfer(long from, long to, double amount) override
     {
-        printf("[FILE] %ld -> %ld: %f\n", from, to, amount);
+        std::printf("[FILE] %ld -> %ld: %f\n", from, to, amount);
     }
 };

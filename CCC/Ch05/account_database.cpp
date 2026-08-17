@@ -1,11 +1,14 @@
 #include <cstdio>
 
+#ifndef ACCOUNT_DATABASE_CPP
+#define ACCOUNT_DATABASE_CPP
 struct AccountDatabase
 {
     virtual ~AccountDatabase() = default;
     virtual double get_balance(long account_id) = 0;
     virtual void update_balance(long account_id, double new_balance) = 0;
 };
+#endif // ACCOUNT_DATABASE_CPP
 
 struct InMemoryAccountDatabase : AccountDatabase
 {
