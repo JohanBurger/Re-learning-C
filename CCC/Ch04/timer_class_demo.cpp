@@ -1,4 +1,4 @@
-// clang++ -std=c++17 -Wall -Wextra -pedantic timer_class.cpp timer_class_tests.cpp -o timertest
+// clang++ -std=c++17 -Wall -Wextra -pedantic timer_class.cpp timer_class_demo.cpp -o timerdemo
 
 #include <cstdio>
 #include <sys/time.h>

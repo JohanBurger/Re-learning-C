@@ -21,6 +21,7 @@ SimpleString::SimpleString(const SimpleString &other)
       buffer{new char[other.max_size]},
       length{other.length}
 {
+    std::strncpy(buffer, other.buffer, max_size);
 }
 
 SimpleString::SimpleString(SimpleString &&other) noexcept

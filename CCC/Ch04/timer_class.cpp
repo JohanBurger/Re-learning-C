@@ -6,12 +6,19 @@
 #include "timer_class.h"
 
 TimerClass::TimerClass(const char *name)
-    : name{new char[strlen(name) + 1]}
+    : name{nullptr}
 {
+    if (name == nullptr)
+    {
+        throw std::invalid_argument("TimerClass name must not be null.");
+    }
+
     if (gettimeofday(&timestamp, nullptr) != 0)
     {
         throw std::runtime_error("Failed to get current time.");
     }
+
+    this->name = new char[strlen(name) + 1];
     std::strcpy(this->name, name);
 }
 
@@ -68,8 +75,10 @@ TimerClass::~TimerClass()
         if (gettimeofday(&now, nullptr) == 0)
         {
             auto elapsed = subtract(now, timestamp);
-            printf("%s Elapsed time: %ld.%06d seconds\n",
-                   name, elapsed.tv_sec, elapsed.tv_usec);
+            std::printf("%s Elapsed time: %ld.%06d seconds\n",
+                        name,
+                        static_cast<long>(elapsed.tv_sec),
+                        static_cast<int>(elapsed.tv_usec));
         }
     }
 
