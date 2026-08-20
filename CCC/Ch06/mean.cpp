@@ -1,6 +1,6 @@
 // clang++ -std=c++17 -Wall -Wextra -pedantic mean.cpp -o mean
 
-#include <concepts>
+// #include <concepts> // Requires C++20; not needed for this C++17 implementation
 #include <cstddef>
 #include <cstdio>
 #include <type_traits>
@@ -30,6 +30,11 @@ T mean(const T *values, std::size_t length)
     static_assert(std::is_copy_constructible<T>(), "Type T must be copy constructible");
     static_assert(std::is_arithmetic<T>(), "Type T must be an arithmetic type");
     static_assert(std::is_constructible<T, std::size_t>(), "Type T must be constructible from std::size_t");
+
+    if (length == 0)
+    {
+        return T{};
+    }
 
     T sum{0};
     for (std::size_t i = 0; i < length; ++i)

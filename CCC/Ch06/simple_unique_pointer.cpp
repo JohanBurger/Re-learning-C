@@ -47,7 +47,7 @@ struct SimpleUniquePointer
     }
 
 private:
-    T *pointer;
+    T *pointer{nullptr};
 };
 
 struct Tracer
