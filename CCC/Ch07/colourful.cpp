@@ -21,10 +21,10 @@ constexpr std::uint8_t min(std::uint8_t a, std::uint8_t b, std::uint8_t c)
     return min(min(a, b), min(a, c));
 }
 
-constexpr float modulo(float divident, float divisor)
+constexpr float modulo(float dividend, float divisor)
 {
-    const auto quotient = divident / divisor;
-    return divisor * (quotient - static_cast<std::uint8_t>(quotient));
+    const auto q = static_cast<int>(dividend / divisor);
+    return dividend - divisor * static_cast<float>(q);
 }
 
 struct Color

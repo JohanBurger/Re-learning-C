@@ -6,8 +6,8 @@
 
 struct Bucket
 {
-    const static std::size_t data_size{0x1000}; // 4096
-    std::byte data[data_size];
+    static constexpr std::size_t data_size{0x1000}; // 4096
+    alignas(std::max_align_t) std::byte data[data_size];
 };
 
 struct Heap

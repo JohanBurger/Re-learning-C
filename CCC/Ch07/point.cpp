@@ -21,8 +21,8 @@ struct Point
 
 int main(void)
 {
-    const auto point_size = sizeof(Point);
-    std::byte data[3 * point_size];
+    constexpr std::size_t point_size = sizeof(Point);
+    alignas(Point) std::byte data[3 * point_size];
     printf("Data starts at %p\n", static_cast<void *>(data));
     auto point1 = new (&data[0 * point_size]) Point();
     auto point2 = new (&data[1 * point_size]) Point();

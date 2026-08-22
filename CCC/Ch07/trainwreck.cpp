@@ -10,7 +10,7 @@ void trainwreck_break(const char *read_only)
 
 void trainwreck_still_breaks(const char *read_only)
 {
-    auto not_const = const_cast<char *>(read_only); // This removes the const qualifier, but it does not make the object mutable. Modifying a string literal is undefined behavior.
+    auto not_const = const_cast<char *>(read_only); // This removes the const qualifier; modifying through this pointer is only defined if the original object is actually non-const (e.g., a mutable char[]), not a string literal.
     auto as_unsigned = reinterpret_cast<unsigned char *>(not_const);
     *as_unsigned = 'b';
 }
