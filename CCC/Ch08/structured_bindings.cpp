@@ -8,9 +8,8 @@ struct TextFile
     std::size_t n_bytes;
 };
 
-TextFile read_text_file(const char *path)
+TextFile read_text_file([[maybe_unused]] const char *path)
 {
-    (void)path;
     const static char contents[] = {"Sometimes the goat is you."};
     return TextFile
     {
