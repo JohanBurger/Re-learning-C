@@ -54,19 +54,24 @@ void *operator new(std::size_t bytes)
     return heap.allocate(bytes);
 }
 
-void operator delete(void *ptr) noexcept
+void operator delete(void *ptr)
 {
-    return heap.free(ptr);
+    heap.free(ptr);
+}
+
+void operator delete(void *ptr, std::size_t)
+{
+    heap.free(ptr);
 }
 
 int main(void)
 {
-    printf("Buckes: %p\n", static_cast<void *>(heap.buckets));
-    printf("Bucket size: 0x%zx\n", sizeof(Bucket));
+    std::printf("Buckes: %p\n", static_cast<void *>(heap.buckets));
+    std::printf("Bucket size: 0x%zx\n", sizeof(Bucket));
     auto breakfast = new unsigned int{0xC0FFFEE};
     auto dinner = new unsigned int{0xDEADBEEF};
-    printf("Breakfast: %p 0x%x\n", static_cast<void *>(breakfast), *breakfast);
-    printf("Dinner:    %p 0x%x\n", static_cast<void *>(dinner), *dinner);
+    std::printf("Breakfast: %p 0x%x\n", static_cast<void *>(breakfast), *breakfast);
+    std::printf("Dinner:    %p 0x%x\n", static_cast<void *>(dinner), *dinner);
 
     delete breakfast;
     delete dinner;
@@ -76,15 +81,15 @@ int main(void)
         while (true)
         {
             new char;
-            printf("Allocated a char\n");
+            std::printf("Allocated a char\n");
         }
     }
     catch (const std::bad_alloc &e)
     {
-        printf("Caught bad_alloc: %s\n", e.what());
+        std::printf("Caught bad_alloc: %s\n", e.what());
     }
     catch (const std::runtime_error &e)
     {
-        printf("Caught runtime_error: %s\n", e.what());
+        std::printf("Caught runtime_error: %s\n", e.what());
     }
 }
