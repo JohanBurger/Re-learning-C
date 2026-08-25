@@ -14,5 +14,5 @@ int main(void)
 {
     uint8_t x{1};
     while (!double_overflow(x))
-    printf("%u ", x);
+    printf("%hhu ", x); // hhu: unsigned char
 }

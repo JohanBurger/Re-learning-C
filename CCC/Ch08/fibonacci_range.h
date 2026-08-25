@@ -1,7 +1,7 @@
-#include "fibonacci_iterator.h"
-
 #ifndef FIBONACCI_RANGE_H
 #define FIBONACCI_RANGE_H
+
+#include "fibonacci_iterator.h"
 
 struct FibonacciRange
 {

@@ -10,6 +10,7 @@ struct TextFile
 
 TextFile read_text_file(const char *path)
 {
+    (void)path;
     const static char contents[] = {"Sometimes the goat is you."};
     return TextFile
     {

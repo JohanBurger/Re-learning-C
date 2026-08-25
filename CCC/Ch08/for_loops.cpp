@@ -5,7 +5,8 @@ int main(void)
 {
     const int x[]{1, 1, 2, 3, 5, 8};
 
-    for (int i{}; i < 6; i++)
+    int array_length = static_cast<int>(sizeof(x) / sizeof(x[0]));
+    for (int i{}; i < array_length; i++)
     {
         std::printf("%d: %d\n", i, x[i]);
     }
