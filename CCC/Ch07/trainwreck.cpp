@@ -18,7 +18,7 @@ void trainwreck_still_breaks(const char *read_only)
 int main(void)
 {
     const char *read_only = "Hello, world!";
-    printf("Before trainwreck: %s\n", read_only);
+    std::printf("Before trainwreck: %s\n", read_only);
     trainwreck_still_breaks(read_only);
     std::printf("After trainwreck: %s\n", read_only);
 }
