@@ -27,15 +27,15 @@ int main(void)
 {
     CheckedInteger a{100};
     auto b = a + 200;
-    printf("a + 200 = %u\n", b.value);
+    std::printf("a + 200 = %u\n", b.value);
 
     try
     {
         auto c = a + std::numeric_limits<unsigned int>::max();
-        printf("a + max = %u\n", c.value);
+        std::printf("a + max = %u\n", c.value);
     }
     catch (const std::overflow_error &e)
     {
-        printf("Overflow error: %s\n", e.what());
+        std::printf("Overflow error: %s\n", e.what());
     }
 }
