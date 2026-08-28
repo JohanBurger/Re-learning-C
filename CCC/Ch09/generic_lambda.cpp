@@ -1,8 +1,6 @@
 #include <cstdint>
 #include <iostream>
 
-#include <math.h>
-
 struct LambdaFactory
 {
     LambdaFactory(char in) : to_count{in}, tally{} {}
@@ -40,10 +38,10 @@ void transform(Fn fn, const T *in, T *out, std::size_t length)
 
 int main(void)
 {
-    constexpr size_t len{3};
+    constexpr std::size_t len{3};
     int base_int[]{1, 2, 3}, a[len];
     float base_float[]{0.5f, 0.25f, 0.125f}, b[len];
-    auto translate = [](auto x) { return pow(x, 2); };
+    auto translate = [](auto x) { return x * x; };
 
     transform(translate, base_int, a, len);
     transform(translate, base_float, b, len);

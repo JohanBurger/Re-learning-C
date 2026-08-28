@@ -1,6 +1,5 @@
 #include <cstdint>
 #include <iostream>
-#include <math.h>
 
 template <typename Fn>
 void transform(Fn fn, const int *in, int *out, std::size_t length) 
@@ -17,11 +16,11 @@ int main(void)
     int base[]{1, 2, 3}, a[len], b[len], c[len];
     transform([](int x) {return 1;}, base, a, len);
     transform([](int x) {return x;}, base, b, len);
-    transform([](int x) {return pow(x, 2);}, base, c, len);
+    transform([](int x) {return x * x; }, base, c, len);
 
     for (std::size_t i{}; i < len; i++)
     {
-        std::cout << a[1] << "\t" << b[i] << "\t" << c[i] << std::endl;
+        std::cout << a[i] << "\t" << b[i] << "\t" << c[i] << std::endl;
     }
 
     auto increment = [](auto x, int y = 1) { return x + y; };

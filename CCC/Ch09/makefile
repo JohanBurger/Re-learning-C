@@ -25,7 +25,7 @@ lambda: lambda.cpp
 generic_lambda: generic_lambda.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-functiosn: functions.cpp
+functions: functions.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 clean:

@@ -6,7 +6,7 @@ struct CountIf
     std::size_t operator()(const char* str) const 
     {
         // std::cout << "Here" << std::endl;
-        size_t index{}, result{};
+        std::size_t index{}, result{};
         while (str[index])
         {
             if (str[index] == x)
