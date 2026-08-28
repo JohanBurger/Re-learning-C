@@ -1,7 +1,7 @@
 CXX      := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -pedantic
 
-PROGRAMS := auto variadic func_pointers func_types lambda generic_lambda functions
+PROGRAMS := auto variadic func_pointers func_types lambda generic_lambda functions example
 
 .PHONY: all clean
 
@@ -26,6 +26,9 @@ generic_lambda: generic_lambda.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 functions: functions.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+example: example.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 clean:
