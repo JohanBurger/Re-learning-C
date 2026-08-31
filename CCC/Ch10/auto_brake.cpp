@@ -15,8 +15,12 @@ AutoBrake::AutoBrake(IServiceBus &service_bus)
     service_bus.subscribe([this, &service_bus](const CarDetected &car_detected)
     {
         const auto relative_velocity_mps = this->speed_mps - car_detected.velocity_mps;
+        if (relative_velocity_mps <= 0)
+        {
+            return;
+        }
         const auto time_to_collision_s = car_detected.distance_m / relative_velocity_mps;
-        if (time_to_collision_s > 0 
+        if (time_to_collision_s > 0.0
             && time_to_collision_s <= this->collision_threshold_s)
         {
             service_bus.publish(BrakeCommand{time_to_collision_s});
@@ -33,12 +37,12 @@ void AutoBrake::set_collision_threshold_s(double collision_threshold_s)
     this->collision_threshold_s = collision_threshold_s;
 }
 
-double AutoBrake::get_collision_threshold_s()
+double AutoBrake::get_collision_threshold_s() const
 {
     return this->collision_threshold_s;
 }
 
-double AutoBrake::get_speed_mps()
+double AutoBrake::get_speed_mps() const
 {
     return this->speed_mps;
 }

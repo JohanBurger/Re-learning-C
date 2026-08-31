@@ -19,7 +19,7 @@ void initial_speed_is_zero()
 {
     MockServiceBus bus{};
     AutoBrake auto_brake{ bus };
-    assert_that(auto_brake.get_speed_mps() == 0L, "Speed not equal to 0");
+    assert_that(auto_brake.get_speed_mps() == 0.0, "Speed not equal to 0");
 }
 
 void initial_sensitivity_is_five() 

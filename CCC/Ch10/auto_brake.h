@@ -10,8 +10,8 @@ class AutoBrake
 public:
     AutoBrake(IServiceBus&);
     void set_collision_threshold_s(double);
-    double get_collision_threshold_s();
-    double get_speed_mps();
+    double get_collision_threshold_s() const;
+    double get_speed_mps() const;
 
 private:
     double collision_threshold_s;

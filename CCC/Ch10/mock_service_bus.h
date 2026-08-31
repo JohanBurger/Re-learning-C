@@ -7,10 +7,10 @@ class MockServiceBus : public IServiceBus
 public: 
     void publish(const BrakeCommand&) override;
     void subscribe(const CarDetectedCallback) override;
-    void subscribe(const SpeedUdateCallback) override;
+    void subscribe(const SpeedUpdateCallback) override;
 
     BrakeCommand last_command{};
     int published_command_counter{};
-    SpeedUdateCallback speed_update_callback{};
+    SpeedUpdateCallback speed_update_callback{};
     CarDetectedCallback car_detected_callback{};
 };
