@@ -1,0 +1,16 @@
+{
+  "name": "Re-learning C++",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools"
+      ]
+    }
+  },
+  "postCreateCommand": "g++ --version && cmake --version && dpkg-query -W -f='${Status}\\n' googletest libgmock-dev libgtest-dev"
+}
