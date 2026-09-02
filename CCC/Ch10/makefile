@@ -18,8 +18,10 @@ auto_brake_test: auto_brake_test.o auto_brake.o
 auto_brake_test.o: auto_brake_test.cpp auto_brake.h 
 	$(CXX) $(CXXFLAGS) -c auto_brake_test.cpp -o auto_brake_test.o
 
+.PHONY: test
 test: auto_brake_test
 	./auto_brake_test
 
+.PHONY: clean
 clean:
-	rm -f brake brake.o auto_brake.o auto_brake_test.o
+	rm -f brake brake.o mock_service_bus.o auto_brake.o auto_brake_test auto_brake_test.o

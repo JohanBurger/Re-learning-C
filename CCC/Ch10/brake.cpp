@@ -17,21 +17,21 @@ constexpr void assert_that(bool statement, const char* message)
 
 void initial_speed_is_zero()
 {
-    MockServiceBus bus{};
+    ServiceBusMock bus{};
     AutoBrake auto_brake{ bus };
     assert_that(auto_brake.get_speed_mps() == 0.0, "Speed not equal to 0");
 }
 
 void initial_sensitivity_is_five() 
 {
-    MockServiceBus bus{};
+    ServiceBusMock bus{};
     AutoBrake auto_brake{ bus };
     assert_that(auto_brake.get_collision_threshold_s() == 5L, "Initial threshold not equal to 5"); 
 }
 
 void sensitivity_greater_than_one()
 {
-    MockServiceBus bus{};
+    ServiceBusMock bus{};
     AutoBrake auto_brake{ bus };
     try
     {
@@ -47,7 +47,7 @@ void sensitivity_greater_than_one()
 
 void speed_is_saved()
 {
-    MockServiceBus bus{};
+    ServiceBusMock bus{};
     AutoBrake auto_brake{ bus };
     auto speed = 100.0;
     bus.speed_update_callback(SpeedUpdate{speed});
@@ -64,7 +64,7 @@ void speed_is_saved()
 
 void alert_when_imminent()
 {
-    MockServiceBus bus{};
+    ServiceBusMock bus{};
     AutoBrake auto_brake{ bus };
 
     auto_brake.set_collision_threshold_s(10.0);
@@ -76,7 +76,7 @@ void alert_when_imminent()
 
 void no_alert_when_not_imminent()
 {
-    MockServiceBus bus{};
+    ServiceBusMock bus{};
     AutoBrake auto_brake{ bus };
 
     auto_brake.set_collision_threshold_s(2L);

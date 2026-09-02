@@ -4,10 +4,8 @@
 
 #include "auto_brake.h"
 #include "car_detected.h"
-// #include "mock_service_bus.h"
 #include "speed_update.h"
 
-using ::testing::_;
 using ::testing::A;
 using ::testing::Field;
 using ::testing::DoubleEq;
@@ -15,7 +13,7 @@ using ::testing::NiceMock;
 using ::testing::StrictMock;
 using ::testing::Invoke;
 
-struct MockServiceBus : IServiceBus
+struct ServiceBusMock : IServiceBus
 {
     MOCK_METHOD1(publish, void(const BrakeCommand &cmd));
     MOCK_METHOD1(subscribe, void(SpeedUpdateCallback callback));
@@ -24,7 +22,7 @@ struct MockServiceBus : IServiceBus
 
 struct NiceAutoBrakeTest : ::testing::Test
 {
-    NiceMock<MockServiceBus> bus{};
+    NiceMock<ServiceBusMock> bus{};
     AutoBrake auto_brake{ bus };
 };
 
@@ -47,7 +45,7 @@ struct StrictAutoBrakeTest : ::testing::Test
     }
     CarDetectedCallback car_detected_callback;
     SpeedUpdateCallback speed_update_callback;
-    StrictMock<MockServiceBus> bus;
+    StrictMock<ServiceBusMock> bus;
 };
 
 TEST_F(NiceAutoBrakeTest, InitialCarSpeedIsZero)
@@ -60,7 +58,7 @@ TEST_F(NiceAutoBrakeTest, InitialSensitivityIsFive)
     ASSERT_DOUBLE_EQ(5, auto_brake.get_collision_threshold_s());
 }
 
-TEST_F(NiceAutoBrakeTest, SensitivityGreaterThanOne)
+TEST_F(NiceAutoBrakeTest, SensitivityLessThanOneThrows)
 {
     ASSERT_ANY_THROW(auto_brake.set_collision_threshold_s(0.5));
 }
