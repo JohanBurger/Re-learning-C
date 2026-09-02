@@ -2,7 +2,7 @@
 
 #include "service_bus.h"
 
-class MockServiceBus : public IServiceBus
+class ServiceBusMock : public IServiceBus
 {
 public: 
     void publish(const BrakeCommand&) override;
