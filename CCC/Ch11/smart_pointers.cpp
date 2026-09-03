@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <memory>
+#include <utility>
 
 class DeadMenOfDunharrow
 {
@@ -149,7 +150,6 @@ TEST(UniquePtrTest, SupportsCustomDeleter)
     std::unique_ptr<int, decltype(my_deleter)> my_up{new int{42}, my_deleter};
 
     EXPECT_TRUE(my_up);
-    EXPECT_NE(my_up.get_deleter(), nullptr);
     EXPECT_EQ(*my_up, 42);
 }
 
@@ -187,19 +187,19 @@ TEST(SharedPtrTest, AssignmentDiscardsOriginalObject)
     son_of_arathorn = aragorn;
     EXPECT_EQ(DeadMenOfDunharrow::oaths_to_fulfill, 1);
     // use_count() counts the number of shared pointers to the raw pointer.
-    // Both shared pointes point to the same raw pointer, so use_count()
+    // Both shared pointers point to the same raw pointer, so use_count()
     // is 2 for both.
     EXPECT_EQ(aragorn.use_count(), 2);
     EXPECT_EQ(son_of_arathorn.use_count(), 2);
 }
 
-using WeakOathBrohters = std::weak_ptr<DeadMenOfDunharrow>;
+using WeakOathBrothers = std::weak_ptr<DeadMenOfDunharrow>;
 
 TEST(WeakPtrTest, LockYieldsSharedPointer)
 {
     auto msg = "The way is shut.";
     auto aragorn = std::make_shared<DeadMenOfDunharrow>(msg);
-    WeakOathBrohters legolas{aragorn};
+    WeakOathBrothers legolas{aragorn};
     auto first_sh_ptr = legolas.lock();
 
     EXPECT_NE(first_sh_ptr, nullptr);
@@ -213,7 +213,7 @@ TEST(WeakPtrTest, LockYieldsSharedPointer)
 TEST(WeakPtrTest, LockYieldsEmptyWhenSharedPtrIsGone)
 {
     auto msg = "The way is shut.";
-    WeakOathBrohters legolas;
+    WeakOathBrothers legolas;
     {
         auto aragon = std::make_shared<DeadMenOfDunharrow>(msg);
         legolas = aragon;

@@ -12,6 +12,6 @@ smart_pointers.o: smart_pointers.cpp
 test: smart_pointers
 	./smart_pointers
 
-.PHONE: clean
+.PHONY: clean
 clean:
 	rm -f smart_pointers smart_pointers.o
