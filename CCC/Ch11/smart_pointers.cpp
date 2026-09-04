@@ -17,6 +17,12 @@ public:
         this->oaths_to_fulfill--;
     }
 
+    // Copy/move would bypass the constructor's counter increment, so disallow them.
+    DeadMenOfDunharrow(const DeadMenOfDunharrow &) = delete;
+    DeadMenOfDunharrow &operator=(const DeadMenOfDunharrow &) = delete;
+    DeadMenOfDunharrow(DeadMenOfDunharrow &&) = delete;
+    DeadMenOfDunharrow &operator=(DeadMenOfDunharrow &&) = delete;
+
     const char *message;
     static int oaths_to_fulfill;
 };
@@ -124,7 +130,7 @@ TEST(UniquePtrTest, CanBeMoved)
 {
     UniqueOathBreakers aragorn{new DeadMenOfDunharrow{}};
     // This does not compile:
-    // by_val(*aragorn);
+    // by_val(aragorn);
 
     // But this does:
     EXPECT_NO_THROW(by_val(std::move(aragorn)));
@@ -215,8 +221,8 @@ TEST(WeakPtrTest, LockYieldsEmptyWhenSharedPtrIsGone)
     auto msg = "The way is shut.";
     WeakOathBrothers legolas;
     {
-        auto aragon = std::make_shared<DeadMenOfDunharrow>(msg);
-        legolas = aragon;
+        auto aragorn = std::make_shared<DeadMenOfDunharrow>(msg);
+        legolas = aragorn;
     }
     auto sh_ptr = legolas.lock();
     EXPECT_FALSE(sh_ptr);
