@@ -1,4 +1,4 @@
-// #include <utility>
+#pragma once
 
 struct Socialite
 {
@@ -10,7 +10,7 @@ struct Valet
     const char *surname;
 };
 
-struct Acquintance
+struct Acquaintance
 {
     const char *nickname;
 };
@@ -23,9 +23,10 @@ struct EscapeCapsule
 
 struct BugblatterBeast
 {
-    BugblatterBeast() 
-        : is_ravenous{true}, weight_kg{600} 
-    { }
+    BugblatterBeast()
+        : is_ravenous{true}, weight_kg{600}
+    {
+    }
 
     bool is_ravenous;
     int weight_kg;

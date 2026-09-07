@@ -1,3 +1,9 @@
+#include <any>
+#include <chrono>
+#include <tuple>
+#include <utility>
+#include <variant>
+
 #include <gtest/gtest.h>
 #include "optional.h"
 #include "pairs.h"
@@ -21,7 +27,7 @@ TEST(Pairs, PermitsAccessToMembers)
 {
     auto bertie_birthname = "Wilberforce";
     Socialite bertie{bertie_birthname};
-    
+
     auto reginald_surname = "Jeeves";
     Valet reginald{reginald_surname};
 
@@ -35,20 +41,20 @@ TEST(Tuples, PermitsAccessToMembers)
 {
     auto bertie_birthname = "Wilberforce";
     Socialite bertie{bertie_birthname};
-    
+
     auto reginald_surname = "Jeeves";
     Valet reginald{reginald_surname};
 
     auto hildebrand_nickname = "Tuppy";
-    Acquintance hildebrand{hildebrand_nickname};
-    
-    using Trio = std::tuple<Socialite, Valet, Acquintance>;
+    Acquaintance hildebrand{hildebrand_nickname};
+
+    using Trio = std::tuple<Socialite, Valet, Acquaintance>;
     Trio truculent_trio{bertie, reginald, hildebrand};
 
     auto &bertie_ref = std::get<0>(truculent_trio);
     EXPECT_STREQ(bertie_ref.birthname, bertie_birthname);
 
-    auto &tuppy_ref = std::get<Acquintance>(truculent_trio);
+    auto &tuppy_ref = std::get<Acquaintance>(truculent_trio);
     EXPECT_STREQ(tuppy_ref.nickname, hildebrand_nickname);
 }
 
@@ -106,7 +112,8 @@ TEST(Variant, CanVisit)
     std::variant<BugblatterBeast, EscapeCapsule> hagunemnon;
     int capsule_weight = 517;
     hagunemnon.emplace<EscapeCapsule>(capsule_weight);
-    auto lbs = std::visit([](auto &x){return 2.2*x.weight_kg;}, hagunemnon);
+    auto lbs = std::visit([](auto &x)
+                          { return 2.2 * x.weight_kg; }, hagunemnon);
     EXPECT_NE(lbs, capsule_weight);
     EXPECT_EQ(lbs, capsule_weight * 2.2);
 }
