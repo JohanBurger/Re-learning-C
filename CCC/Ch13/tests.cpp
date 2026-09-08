@@ -1,4 +1,5 @@
 #include <array>
+#include <cstdint>
 #include <deque>
 #include <functional>
 #include <iostream>
@@ -7,7 +8,10 @@
 #include <queue>
 #include <set>
 #include <stack>
+#include <stdexcept>
+#include <string>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 #include <gtest/gtest.h>
 
@@ -25,6 +29,7 @@ using std::queue;
 using std::set;
 using std::size_t;
 using std::stack;
+using std::string;
 using std::unordered_set;
 using std::vector;
 
@@ -32,8 +37,10 @@ using std::vector;
 
 TEST(Array, InitializedArrayElementsInitializedToZero)
 {
-    array<int, 10> local_array{};
-    EXPECT_EQ(local_array[0], 0);
+    array<int, 10> local_array;
+    // Default-initialized std::array<int, N> does not value-initialize its elements.
+    // Reading such elements is undefined behavior; use {} to value-initialize instead.
+    EXPECT_NE(local_array[0], 0);
 }
 
 TEST(Array, UninitializedArrayElemntesNotInitializedToZero)
@@ -69,7 +76,7 @@ TEST(Array, CanGetAndSetElements)
     local_array[element_index] = element_value;
     //  ...get
     EXPECT_EQ(local_array[element_index], element_value);
-    //  ...whoops!
+    //  ...whoops! operator[] does not perform bounds checking; avoid out-of-range access.
     EXPECT_NO_THROW((void)local_array[array_size + 2]);
 
     // at()
@@ -85,7 +92,7 @@ TEST(Array, CanGetAndSetElements)
     // get()
     element_value = 17;
     element_index = 2;
-    //  ...set - The index must be know at compile-time. :(
+    //  ...set - The index must be known at compile-time. :(
     get<2>(local_array) = element_value;
     //  ...set
     EXPECT_EQ(get<2>(local_array), element_value);
@@ -439,7 +446,7 @@ TEST(UnorderedSet, AllowsSpaceReservationForElements)
     unordered_set<unsigned long> sheep(bucket_count);
     sheep.reserve(sheep_count);
     sheep.insert(0);
-    EXPECT_LT(sheep.load_factor(), 0.00001);
+    EXPECT_LT(sheep.load_factor(), 0.00001f);
 
     while (sheep.size() < sheep_count)
     {
@@ -451,17 +458,17 @@ TEST(UnorderedSet, AllowsSpaceReservationForElements)
 
 TEST(Map, SupportsDefaultConstruction)
 {
-    map<const char *, int> emp;
+    map<string, int> emp;
     EXPECT_TRUE(emp.empty());
 }
 
+constexpr const char *colour_of_magic = "Colour of Magic";
+constexpr const char *the_light_fantastic = "The Light Fantastic";
+constexpr const char *equal_rites = "Equal Rites";
+constexpr const char *mort = "Mort";
+
 TEST(Map, SupportsBracedInitialization)
 {
-    auto colour_of_magic = "Colour or Magic";
-    auto the_light_fantastic = "The Light Fantastic";
-    auto equal_rites = "Equal Rites";
-    auto mort = "Mort";
-
     map<const char *, int> published_year =
         {
             {colour_of_magic, 1983},
@@ -470,11 +477,6 @@ TEST(Map, SupportsBracedInitialization)
             {mort, 1987}};
     EXPECT_EQ(published_year.size(), 4);
 }
-
-auto colour_of_magic = "Colour or Magic";
-auto the_light_fantastic = "The Light Fantastic";
-auto equal_rites = "Equal Rites";
-auto mort = "Mort";
 
 TEST(Map, CanUseSquareBrackets)
 {
