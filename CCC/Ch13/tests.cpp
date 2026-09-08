@@ -1,22 +1,31 @@
 #include <array>
 #include <deque>
+#include <functional>
+#include <iostream>
 #include <list>
-#include <vector>
-#include <stack>
+#include <map>
 #include <queue>
 #include <set>
-#include <iostream>
+#include <stack>
+#include <unordered_set>
+#include <vector>
 #include <gtest/gtest.h>
 
 using std::array;
 using std::deque;
 using std::get;
+using std::hash;
 using std::list;
+using std::map;
+using std::multimap;
+using std::multiset;
+using std::pair;
 using std::priority_queue;
 using std::queue;
 using std::set;
 using std::size_t;
 using std::stack;
+using std::unordered_set;
 using std::vector;
 
 // std::array<int, 10> static_array{};
@@ -334,13 +343,221 @@ TEST(Set, SupportsConstruction)
     auto fib_moved(std::move(fib));
     EXPECT_EQ(fib_moved.size(), 4);
     EXPECT_TRUE(fib.empty());
+
+    array<int, 5> fib_array{1, 1, 2, 3, 5};
+    set<int> fib_set(fib_array.cbegin(), fib_array.cend());
+    EXPECT_EQ(fib_set.size(), 4);
 }
 
 TEST(Set, AllowsAccess)
 {
-    set<int> fib{1, 1, 2, 3, 5};
-    // std::cout << *fib.find(3) << std::endl;
-    EXPECT_EQ(*fib.find(3), 3);
+    set<int> fib_set{1, 1, 2, 3, 5};
+    EXPECT_EQ(*fib_set.find(3), 3); // Iterator to the `3` element
+    EXPECT_EQ(fib_set.size(), 4);
+    EXPECT_EQ(fib_set.count(1), 1);
 
-    std::cout << fib.count(1) << std::endl;
+    EXPECT_EQ(fib_set.find(8), fib_set.end());
+    EXPECT_EQ(fib_set.count(8), 0);
+
+    EXPECT_EQ(*fib_set.lower_bound(4), 5); // First element >= 4
+    EXPECT_EQ(*fib_set.lower_bound(3), 3); // First element >= 3
+    EXPECT_EQ(*fib_set.upper_bound(3), 5); // First element > 3
+}
+
+TEST(Set, AllowsAdditionOfElements)
+{
+    set<int> fib_set{1, 1, 2, 3, 5};
+    auto [iterator, inserted] = fib_set.insert(8);
+    EXPECT_TRUE(inserted);
+    EXPECT_NE(fib_set.find(8), fib_set.end());
+
+    fib_set.emplace(13);
+    EXPECT_NE(fib_set.find(13), fib_set.end());
+
+    fib_set.emplace_hint(fib_set.end(), 21);
+    EXPECT_NE(fib_set.find(21), fib_set.end()); // Add hint where to insert.
+
+    auto result = fib_set.insert(21); // pair of iterator and success
+    EXPECT_FALSE(result.second);      // Because it already existed.
+}
+
+TEST(Set, AllowsRemovalOfElements)
+{
+    set<int> fib_set{1, 1, 2, 3, 5};
+    fib_set.erase(3);
+    EXPECT_EQ(fib_set.find(3), fib_set.end());
+
+    fib_set.clear();
+    EXPECT_TRUE(fib_set.empty());
+}
+
+TEST(Multiset, HandlesNonUniqueKeys)
+{
+    multiset<int> fib_set{1, 1, 2, 3, 5};
+    EXPECT_EQ(fib_set.size(), 5);
+
+    EXPECT_EQ(fib_set.count(1), 2);
+
+    int count{};
+    auto [begin, end] = fib_set.equal_range(1);
+    for (auto it = begin; it != end; ++it)
+    {
+        EXPECT_EQ(*it, 1);
+        count++;
+    }
+    EXPECT_EQ(count, 2);
+}
+
+TEST(Hash, EqualHashCodesForEqualKeys)
+{
+    hash<long> hasher;
+    auto hash_code_42 = hasher(42);
+    EXPECT_EQ(hash_code_42, hasher(42));
+}
+
+TEST(Hash, DifferentHashCodesForDifferentKeys)
+{
+    hash<long> hasher;
+    auto hash_code_42 = hasher(42);
+    auto hash_code_43 = hasher(43);
+    EXPECT_NE(hash_code_42, hash_code_43);
+}
+
+TEST(UnorderedSet, AllowsBucketCountSpecificationOnConstruction)
+{
+    unsigned long bucket_count{100};
+    unordered_set<unsigned long> sheep(bucket_count);
+    EXPECT_GE(sheep.bucket_count(), bucket_count);
+    EXPECT_LT(sheep.bucket_count(), sheep.max_bucket_count());
+    EXPECT_FLOAT_EQ(sheep.max_load_factor(), 1.0);
+}
+
+TEST(UnorderedSet, AllowsSpaceReservationForElements)
+{
+    unsigned long bucket_count{100};
+    size_t sheep_count{100'000};
+    unordered_set<unsigned long> sheep(bucket_count);
+    sheep.reserve(sheep_count);
+    sheep.insert(0);
+    EXPECT_LT(sheep.load_factor(), 0.00001);
+
+    while (sheep.size() < sheep_count)
+    {
+        sheep.insert(sheep.size());
+    }
+    EXPECT_LT(sheep.load_factor(), 1.0);
+    EXPECT_GT(sheep.bucket_count(), bucket_count);
+}
+
+TEST(Map, SupportsDefaultConstruction)
+{
+    map<const char *, int> emp;
+    EXPECT_TRUE(emp.empty());
+}
+
+TEST(Map, SupportsBracedInitialization)
+{
+    auto colour_of_magic = "Colour or Magic";
+    auto the_light_fantastic = "The Light Fantastic";
+    auto equal_rites = "Equal Rites";
+    auto mort = "Mort";
+
+    map<const char *, int> published_year =
+        {
+            {colour_of_magic, 1983},
+            {the_light_fantastic, 1986},
+            {equal_rites, 1987},
+            {mort, 1987}};
+    EXPECT_EQ(published_year.size(), 4);
+}
+
+auto colour_of_magic = "Colour or Magic";
+auto the_light_fantastic = "The Light Fantastic";
+auto equal_rites = "Equal Rites";
+auto mort = "Mort";
+
+TEST(Map, CanUseSquareBrackets)
+{
+    map<const char *, int> published_year =
+        {
+            {colour_of_magic, 1983},
+            {the_light_fantastic, 1986},
+            {equal_rites, 1987}};
+
+    EXPECT_EQ(published_year[colour_of_magic], 1983);
+    EXPECT_EQ(published_year[mort], 0);
+}
+
+TEST(Map, CanUseAtMethod)
+{
+    map<const char *, int> published_year =
+        {
+            {colour_of_magic, 1983},
+            {the_light_fantastic, 1986},
+            {equal_rites, 1987}};
+
+    EXPECT_EQ(published_year.at(colour_of_magic), 1983);
+    EXPECT_THROW(published_year.at(mort), std::out_of_range);
+}
+
+TEST(Map, SupportsInsert)
+{
+    map<const char *, int> pub_year;
+    pub_year.insert({colour_of_magic, 1983});
+    EXPECT_EQ(pub_year.size(), 1);
+
+    pair<const char *, int> tlf = {the_light_fantastic, 1986};
+    pub_year.insert(tlf);
+    EXPECT_EQ(pub_year.size(), 2);
+
+    auto [iter, is_new] = pub_year.insert({the_light_fantastic, 9999});
+    EXPECT_STREQ(iter->first, the_light_fantastic);
+    EXPECT_EQ(iter->second, 1986);
+    EXPECT_FALSE(is_new);
+    EXPECT_EQ(pub_year.size(), 2);
+}
+
+TEST(Map, SupportsInsertOrAssign)
+{
+    map<const char *, int> pub_year;
+    pub_year.insert({the_light_fantastic, 9999});
+
+    auto [iter, is_new] = pub_year.insert_or_assign(the_light_fantastic, 1986);
+    ASSERT_STREQ(iter->first, the_light_fantastic);
+    ASSERT_EQ(iter->second, 1986);
+    ASSERT_FALSE(is_new);
+    ASSERT_EQ(pub_year.size(), 1);
+}
+
+TEST(Map, SupportsRemoval)
+{
+    map<const char *, int> pub_year{
+        {colour_of_magic, 1983},
+        {the_light_fantastic, 1986},
+        {mort, 1987}};
+
+    pub_year.erase(mort);
+    EXPECT_EQ(pub_year.size(), 2);
+
+    pub_year.clear();
+    EXPECT_EQ(pub_year.size(), 0);
+}
+
+TEST(MultiMap, SupportsNonUniqueKeys)
+{
+    array<char, 64> far_out{"Far out in the uncharted backwaters of the unfashionable end..."};
+    multimap<char, size_t> indices;
+
+    for (size_t index{}; index < far_out.size(); index++)
+    {
+        indices.emplace(far_out[index], index);
+    }
+
+    EXPECT_EQ(indices.count('a'), 6);
+    auto [iter, end] = indices.equal_range('d');
+    EXPECT_EQ(iter->second, 23);
+    iter++;
+    EXPECT_EQ(iter->second, 59);
+    iter++;
+    EXPECT_EQ(iter, end);
 }
